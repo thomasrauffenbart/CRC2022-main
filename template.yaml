@@ -7,7 +7,7 @@ Resources:
   DynamoDBTable:
     Type: AWS::DynamoDB::Table
     Properties:
-      TableName: toms-crc-SAM
+      TableName: toms-crc-SAMCICD
       BillingMode: PAY_PER_REQUEST
       AttributeDefinitions:
         - AttributeName: "ID"
@@ -21,7 +21,7 @@ Resources:
     Properties:
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: toms-crc-SAM
+            TableName: toms-crc-SAMCICD
       CodeUri: s3://thomasrauffenbartresume2022/app.py.zip
       Handler: app.lambda_handler
       Runtime: python3.8
