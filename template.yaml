@@ -2,12 +2,17 @@ AWSTemplateFormatVersion: "2010-09-09"
 Transform: "AWS::Serverless-2016-10-31"
 Description: 'thomas-rauffenbart-crc-SAM-update2'
 
+Parameters:
+  StackName:
+    Type: String
+    Default: APP-ENVIROMENT-SERVICE
+
 Resources:
 
   DynamoDBTable:
     Type: AWS::DynamoDB::Table
     Properties:
-      TableName: toms-crc-SAMCICD
+      TableName:  !Sub ${AWS::StackName}-MyTable
       BillingMode: PAY_PER_REQUEST
       AttributeDefinitions:
         - AttributeName: "ID"
@@ -21,7 +26,7 @@ Resources:
     Properties:
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: toms-crc-SAMCICD
+            TableName: !Sub ${AWS::StackName}-MyTable
       CodeUri: s3://thomasrauffenbartresume2022/app.py.zip
       Handler: app.lambda_handler
       Runtime: python3.8
