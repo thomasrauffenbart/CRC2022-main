@@ -13,7 +13,7 @@ env:
   PIPELINE_USER_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   PIPELINE_USER_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   SAM_TEMPLATE: template.yaml
-  TESTING_STACK_NAME: Dev-Stack
+  TESTING_STACK_NAME: dev-stack
   TESTING_PIPELINE_EXECUTION_ROLE: arn:aws:iam::290776742082:role/aws-sam-cli-managed-Dev-pipe-PipelineExecutionRole-1KRFBYI5BU88F
   TESTING_CLOUDFORMATION_EXECUTION_ROLE: arn:aws:iam::290776742082:role/aws-sam-cli-managed-Dev-p-CloudFormationExecutionR-2GD724TQGX63
   TESTING_ARTIFACTS_BUCKET: aws-sam-cli-managed-dev-pipeline-artifactsbucket-vsjvsbqrqxw6
@@ -22,10 +22,10 @@ env:
   # testing "sam package" and "sam deploy" commands.
   # TESTING_IMAGE_REPOSITORY = '0123456789.dkr.ecr.region.amazonaws.com/repository-name'
   TESTING_REGION: us-east-1
-  PROD_STACK_NAME: Prod-Stack
-  PROD_PIPELINE_EXECUTION_ROLE: arn:aws:iam::290776742082:role/aws-sam-cli-managed-prod2-pi-PipelineExecutionRole-1WNRSTYV0CFOK
-  PROD_CLOUDFORMATION_EXECUTION_ROLE: arn:aws:iam::290776742082:role/aws-sam-cli-managed-prod2-CloudFormationExecutionR-I9H140GDCQEC
-  PROD_ARTIFACTS_BUCKET: aws-sam-cli-managed-prod2-pipelin-artifactsbucket-x6ahootkrrj9
+  PROD_STACK_NAME: prod-stack
+  PROD_PIPELINE_EXECUTION_ROLE: arn:aws:iam::288422731667:role/aws-sam-cli-managed-prod-acc-PipelineExecutionRole-S298R97YDAJH
+  PROD_CLOUDFORMATION_EXECUTION_ROLE: arn:aws:iam::288422731667:role/aws-sam-cli-managed-prod-CloudFormationExecutionR-7HBKO2HEGIHJ
+  PROD_ARTIFACTS_BUCKET: aws-sam-cli-managed-prod-account-artifactsbucket-1mz5dhwied45m
   # If there are functions with "Image" PackageType in your template,
   # uncomment the line below and add "--image-repository ${PROD_IMAGE_REPOSITORY}" to
   # prod "sam package" and "sam deploy" commands.

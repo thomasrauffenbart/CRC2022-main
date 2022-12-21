@@ -2,22 +2,12 @@ AWSTemplateFormatVersion: "2010-09-09"
 Transform: "AWS::Serverless-2016-10-31"
 Description: 'thomas-rauffenbart-crc-SAM-update2'
 
-Mappings:
-    EnvVariables:
-      stage:
-        Dev:
-           var1: user1
-           TableName: toms-crc-SAMCICD-Dev
-        prod2:
-           var1: user2
-           TableName: toms-crc-SAMCICD-prod2
-
 Resources:
 
   DynamoDBTable:
     Type: AWS::DynamoDB::Table
     Properties:
-      TableName: !FindInMap [ EnvVariables, ${paramEnvironment}, TableName ] 
+      TableName: toms-crc-SAMCICD
       BillingMode: PAY_PER_REQUEST
       AttributeDefinitions:
         - AttributeName: "ID"
@@ -31,7 +21,7 @@ Resources:
     Properties:
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: !FindInMap [ EnvVariables, ${paramEnvironment}, TableName ]
+            TableName: toms-crc-SAMCICD
       CodeUri: s3://thomasrauffenbartresume2022/app.py.zip
       Handler: app.lambda_handler
       Runtime: python3.8
