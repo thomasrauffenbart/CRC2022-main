@@ -10,22 +10,24 @@ on:
       - 'feature**'
 
 env:
-  PIPELINE_USER_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  PIPELINE_USER_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  PIPELINE_USER_ACCESS_KEY_ID_DEV: ${{ secrets.AWS_ACCESS_KEY_ID_DEV }}
+  PIPELINE_USER_SECRET_ACCESS_KEY_DEV: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}
+  PIPELINE_USER_ACCESS_KEY_ID_PROD: ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
+  PIPELINE_USER_SECRET_ACCESS_KEY_PROD: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
   SAM_TEMPLATE: template.yaml
-  TESTING_STACK_NAME: prod-app-stack
-  TESTING_PIPELINE_EXECUTION_ROLE: arn:aws:iam::290776742082:role/aws-sam-cli-managed-Prod-pip-PipelineExecutionRole-Y0EQGG8DICXK
-  TESTING_CLOUDFORMATION_EXECUTION_ROLE: arn:aws:iam::290776742082:role/aws-sam-cli-managed-Prod-CloudFormationExecutionR-1KF6PW3B6XM9J
-  TESTING_ARTIFACTS_BUCKET: aws-sam-cli-managed-prod-pipeline-artifactsbucket-37e83mk5h1q5
+  TESTING_STACK_NAME: Dev-Stack
+  TESTING_PIPELINE_EXECUTION_ROLE: arn:aws:iam::290776742082:role/aws-sam-cli-managed-Dev-pipe-PipelineExecutionRole-1KRFBYI5BU88F
+  TESTING_CLOUDFORMATION_EXECUTION_ROLE: arn:aws:iam::290776742082:role/aws-sam-cli-managed-Dev-p-CloudFormationExecutionR-2GD724TQGX63
+  TESTING_ARTIFACTS_BUCKET: aws-sam-cli-managed-dev-pipeline-artifactsbucket-vsjvsbqrqxw6
   # If there are functions with "Image" PackageType in your template,
   # uncomment the line below and add "--image-repository ${TESTING_IMAGE_REPOSITORY}" to
   # testing "sam package" and "sam deploy" commands.
   # TESTING_IMAGE_REPOSITORY = '0123456789.dkr.ecr.region.amazonaws.com/repository-name'
   TESTING_REGION: us-east-1
-  PROD_STACK_NAME: dev-app-stack
-  PROD_PIPELINE_EXECUTION_ROLE: arn:aws:iam::290776742082:role/aws-sam-cli-managed-Dev-pipe-PipelineExecutionRole-1B6OOT9KF8BPA
-  PROD_CLOUDFORMATION_EXECUTION_ROLE: arn:aws:iam::290776742082:role/aws-sam-cli-managed-Dev-p-CloudFormationExecutionR-10EOCKOL69Q99
-  PROD_ARTIFACTS_BUCKET: aws-sam-cli-managed-dev-pipeline-artifactsbucket-ghau29t8tkpq
+  PROD_STACK_NAME: Prod-Stack
+  PROD_PIPELINE_EXECUTION_ROLE: arn:aws:iam::288422731667:role/aws-sam-cli-managed-Prod-pip-PipelineExecutionRole-RDAN1WI7MY8M
+  PROD_CLOUDFORMATION_EXECUTION_ROLE: arn:aws:iam::288422731667:role/aws-sam-cli-managed-Prod-CloudFormationExecutionR-5UBXEJ50HVE3
+  PROD_ARTIFACTS_BUCKET: aws-sam-cli-managed-prod-pipeline-artifactsbucket-1xvi0jrl1v4qx
   # If there are functions with "Image" PackageType in your template,
   # uncomment the line below and add "--image-repository ${PROD_IMAGE_REPOSITORY}" to
   # prod "sam package" and "sam deploy" commands.
@@ -52,8 +54,8 @@ jobs:
       - name: Assume the testing pipeline user role
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: ${{ env.PIPELINE_USER_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ env.PIPELINE_USER_SECRET_ACCESS_KEY }}
+          aws-access-key-id: ${{ env.PIPELINE_USER_ACCESS_KEY_ID_DEV }}
+          aws-secret-access-key: ${{ env.PIPELINE_USER_SECRET_ACCESS_KEY_DEV }}
           aws-region: ${{ env.TESTING_REGION }}
           role-to-assume: ${{ env.TESTING_PIPELINE_EXECUTION_ROLE }}
           role-session-name: testing-packaging
@@ -84,8 +86,8 @@ jobs:
       - name: Assume the testing pipeline user role
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: ${{ env.PIPELINE_USER_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ env.PIPELINE_USER_SECRET_ACCESS_KEY }}
+          aws-access-key-id: ${{ env.PIPELINE_USER_ACCESS_KEY_ID_DEV }}
+          aws-secret-access-key: ${{ env.PIPELINE_USER_SECRET_ACCESS_KEY_DEV }}
           aws-region: ${{ env.TESTING_REGION }}
           role-to-assume: ${{ env.TESTING_PIPELINE_EXECUTION_ROLE }}
           role-session-name: feature-deployment
@@ -117,8 +119,8 @@ jobs:
       - name: Assume the testing pipeline user role
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: ${{ env.PIPELINE_USER_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ env.PIPELINE_USER_SECRET_ACCESS_KEY }}
+          aws-access-key-id: ${{ env.PIPELINE_USER_ACCESS_KEY_ID_DEV }}
+          aws-secret-access-key: ${{ env.PIPELINE_USER_SECRET_ACCESS_KEY_DEV }}
           aws-region: ${{ env.TESTING_REGION }}
           role-to-assume: ${{ env.TESTING_PIPELINE_EXECUTION_ROLE }}
           role-session-name: testing-packaging
@@ -140,8 +142,8 @@ jobs:
       - name: Assume the prod pipeline user role
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: ${{ env.PIPELINE_USER_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ env.PIPELINE_USER_SECRET_ACCESS_KEY }}
+          aws-access-key-id: ${{ env.PIPELINE_USER_ACCESS_KEY_ID_PROD }}
+          aws-secret-access-key: ${{ env.PIPELINE_USER_SECRET_ACCESS_KEY_PROD }}
           aws-region: ${{ env.PROD_REGION }}
           role-to-assume: ${{ env.PROD_PIPELINE_EXECUTION_ROLE }}
           role-session-name: prod-packaging
@@ -175,8 +177,8 @@ jobs:
       - name: Assume the testing pipeline user role
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: ${{ env.PIPELINE_USER_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ env.PIPELINE_USER_SECRET_ACCESS_KEY }}
+          aws-access-key-id: ${{ env.PIPELINE_USER_ACCESS_KEY_ID_DEV }}
+          aws-secret-access-key: ${{ env.PIPELINE_USER_SECRET_ACCESS_KEY_DEV }}
           aws-region: ${{ env.TESTING_REGION }}
           role-to-assume: ${{ env.TESTING_PIPELINE_EXECUTION_ROLE }}
           role-session-name: testing-deployment
@@ -220,8 +222,8 @@ jobs:
       - name: Assume the prod pipeline user role
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: ${{ env.PIPELINE_USER_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ env.PIPELINE_USER_SECRET_ACCESS_KEY }}
+          aws-access-key-id: ${{ env.PIPELINE_USER_ACCESS_KEY_ID_PROD }}
+          aws-secret-access-key: ${{ env.PIPELINE_USER_SECRET_ACCESS_KEY_PROD }}
           aws-region: ${{ env.PROD_REGION }}
           role-to-assume: ${{ env.PROD_PIPELINE_EXECUTION_ROLE }}
           role-session-name: prod-deployment
